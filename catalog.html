@@ -1,0 +1,97 @@
+<style>
+  /* Обновленный стиль карточек */
+  #product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .product {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    width: 250px; /* Фиксированная ширина */
+    height: 350px; /* Фиксированная высота */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .product img {
+    width: 100%;
+    height: 150px; /* Одинаковая высота для изображений */
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .product-info {
+    margin-top: 10px;
+  }
+
+  .product-details {
+    display: none;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .add-to-cart {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+
+  .add-to-cart:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<script>
+  // Модификация отображения карточек
+  function displayProducts(products) {
+    const productList = document.getElementById('product-list');
+    productList.innerHTML = ''; // Очищаем старые данные
+
+    products.forEach(product => {
+      const productDiv = document.createElement('div');
+      productDiv.classList.add('product');
+
+      // Добавляем содержимое карточки
+      productDiv.innerHTML = `
+        <img src="${product.image_url}" alt="${product.name}">
+        <div class="product-info">
+          <h2>${product.name}</h2>
+          <p class="price">Price: $${product.price}</p>
+          <div class="product-details">
+            <p>${product.description}</p>
+            <p>Category: ${product.category}</p>
+          </div>
+        </div>
+      `;
+
+      // Добавляем обработчик клика для отображения деталей
+      productDiv.addEventListener('click', () => {
+        const details = productDiv.querySelector('.product-details');
+        details.style.display = details.style.display === 'none' || details.style.display === '' ? 'block' : 'none';
+      });
+
+      productList.appendChild(productDiv);
+    });
+  }
+</script>
